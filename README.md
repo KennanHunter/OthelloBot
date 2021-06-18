@@ -1,3 +1,7 @@
+# Othello Bot
+
+The actual program is in the OthelloClass.cpp file with Board::heuristicFunction0 and Board::heuristicFunction1
+
 # ClientEngine
 Instruction for compiling:
 	Place all four files (makefile, OthelloGame.cpp, OthelloClass.cpp, and OthelloClass.h) in the same folder and type “make” in the command line when in the directory where the files are located. Once compiled, type “./OthelloGame” to play the game where you will be prompted who is player 1 and who is player 2 how much time for the computer to play and whether or not you want a previous game state to input.
