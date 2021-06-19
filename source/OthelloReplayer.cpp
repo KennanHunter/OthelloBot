@@ -8,20 +8,20 @@
 
 using namespace std;
 
-spaceState ** ToArray(string strBoard)
+spaceState **ToArray(string strBoard)
 {
-    spaceState ** gameBoard;
+    spaceState **gameBoard;
     gameBoard = new spaceState *[8];
 
     int charCount = 0;
 
     for (int i = 0; i < 8; i++)
     {
-        gameBoard[i] = new spaceState [8];
+        gameBoard[i] = new spaceState[8];
     }
-    for(int i = 0;i<8;i++)
+    for (int i = 0; i < 8; i++)
     {
-        for(int j=0;j<8;j++)
+        for (int j = 0; j < 8; j++)
         {
             gameBoard[i][j] = EMPTY;
         }
@@ -29,7 +29,7 @@ spaceState ** ToArray(string strBoard)
 
     for (string::size_type i = 0; i < strBoard.size(); i++)
     {
-        gameBoard[i / 8][i % 8] = static_cast<spaceState>(strBoard[i]-'0');
+        gameBoard[i / 8][i % 8] = static_cast<spaceState>(strBoard[i] - '0');
     }
     return gameBoard;
 }
@@ -51,7 +51,7 @@ string colorInt2Str(int colorInt)
     return "Error";
 }
 
-int main(int argc ,const char* args[]) 
+int main(int argc, const char *args[])
 {
     // construct the default board
     Board gameObject;
@@ -76,22 +76,22 @@ int main(int argc ,const char* args[])
     {
         ifstream inputFile(filename);
         //cout << filename << endl;
-        if(!inputFile)
+        if (!inputFile)
         {
-            cout<<"Error opening output file"<<endl;
+            cout << "Error opening output file" << endl;
             system("pause");
             return -1;
         }
-        getline(inputFile,currentLine);
-        while(!inputFile.eof())
+        getline(inputFile, currentLine);
+        while (!inputFile.eof())
         {
-            getline(inputFile,currentLine);
+            getline(inputFile, currentLine);
             //cout << currentLine << endl;
             parseCount = 0;
 
-            while((pos = currentLine.find(delimiter)) != string::npos)
+            while ((pos = currentLine.find(delimiter)) != string::npos)
             {
-                token = currentLine.substr(0,pos);
+                token = currentLine.substr(0, pos);
                 if (parseCount == 0)
                 {
                     colorStr = token;
@@ -101,19 +101,18 @@ int main(int argc ,const char* args[])
                     boardStr = token;
                 }
                 parseCount++;
-                currentLine.erase(0,pos + delimiter.length());
+                currentLine.erase(0, pos + delimiter.length());
             }
             turnStr = currentLine;
 
             cout << "Currently " << turnStr << " with the color " << flush;
             cout << colorInt2Str(stoi(colorStr)) << endl;
-            
+
             gameObject.gameBoard = ToArray(boardStr);
 
-            gameObject.display(gameObject.gameBoard,(gameObject.turn));
+            gameObject.display(gameObject.gameBoard, (gameObject.turn));
             cin.get();
         }
-
     }
     else
     {
