@@ -744,332 +744,403 @@ int Board::alphabeta(spaceState **brd, int d, int a, int b, spaceState pieceColo
         {
             v = heuristicFunction0(brd, pieceColor);
         }
+<<<<<<< HEAD
         if (pieceColor == WHITE)
         {
             //v = heuristicFunction1(brd,pieceColor);//KTH
             v = heuristicFunction0(brd, pieceColor);
-        }
-        while (nextMoves[i] != NULL)
-        {
-            i++;
-        }
-        for (int k = 0; k < i; ++k)
-        {
-            for (int l = 0; l < 8; ++l)
+            == == == =
+                         if (pieceColor == WHITE)
             {
-                delete[] nextMoves[k][l];
+                //v = heuristicFunction1(brd,pieceColor);//KTH
+                v = heuristicFunction0(brd, pieceColor);
+>>>>>>> e95f5d0749880819bf992ef60715c22566332d73
             }
-            delete[] nextMoves[k];
-        }
-        delete[] nextMoves;
-    }
-    else if (pt == pieceColor)
-    {
-        v = -1 * POSINF;
-        pt = changePiece(pt);
-        while (nextMoves[i] != NULL)
-        {
-            tempv = alphabeta(nextMoves[i], d - 1, a, b, pieceColor, pt, NULL, start_t, end_t);
-            if (v < tempv)
+            while (nextMoves[i] != NULL)
             {
-                v = tempv;
-                if (ind != NULL)
+                i++;
+            }
+            for (int k = 0; k < i; ++k)
+            {
+                for (int l = 0; l < 8; ++l)
                 {
-                    *ind = i;
+                    delete[] nextMoves[k][l];
                 }
+                delete[] nextMoves[k];
             }
-            a = (a < v) ? v : a;
-            if (b <= a)
-                break;
-            i++;
+            delete[] nextMoves;
         }
-        while (nextMoves[i] != NULL)
+        else if (pt == pieceColor)
         {
-            i++;
-        }
-        for (int k = 0; k < i; ++k)
-        {
-            for (int l = 0; l < 8; ++l)
+            v = -1 * POSINF;
+            pt = changePiece(pt);
+            while (nextMoves[i] != NULL)
             {
-                delete[] nextMoves[k][l];
-            }
-            delete[] nextMoves[k];
-        }
-        delete[] nextMoves;
-    }
-    else
-    {
-        v = POSINF;
-        pt = changePiece(pt);
-        while (nextMoves[i] != NULL)
-        {
-            tempv = alphabeta(nextMoves[i], d - 1, a, b, pieceColor, pt, NULL, start_t, end_t);
-            if (v >= tempv)
-            {
-                v = tempv;
-            }
-            b = (b < v) ? b : v;
-            if (b <= a)
-                break;
-            i++;
-        }
-        while (nextMoves[i] != NULL)
-        {
-            i++;
-        }
-        for (int k = 0; k < i; ++k)
-        {
-            for (int l = 0; l < 8; ++l)
-            {
-                delete[] nextMoves[k][l];
-            }
-            delete[] nextMoves[k];
-        }
-        delete[] nextMoves;
-    }
-    return v;
-}
-
-// pass in the current board and current player's turn
-// output the list of moves for the AI
-spaceState ***Board::AIMoves(spaceState **inputBoard, spaceState pieceColor)
-{
-    //pointer to a pointer to a pointer of an 64x8x8 spaceStates
-    spaceState ***moves = new spaceState **[64];
-    for (int k = 0; k < 64; ++k)
-    {
-        moves[k] = NULL;
-    }
-
-    moves[0] = NULL;
-
-    int rowCounter = 0;
-    int columnCounter = 0;
-    int xchange = 0;
-    int ychange = 0;
-    int rowIterator = 0;
-    int moveCounter = 0;
-
-    for (rowCounter = 0; rowCounter < 8; rowCounter++)
-    {
-        for (columnCounter = 0; columnCounter < 8; columnCounter++)
-        {
-            if (inputBoard[rowCounter][columnCounter] == EMPTY)
-            {
-                for (xchange = -1; xchange < 2; xchange++)
+                tempv = alphabeta(nextMoves[i], d - 1, a, b, pieceColor, pt, NULL, start_t, end_t);
+                if (v < tempv)
                 {
-                    for (ychange = -1; ychange < 2; ychange++)
+                    v = tempv;
+                    if (ind != NULL)
                     {
+                        *ind = i;
+                    }
+                }
+                a = (a < v) ? v : a;
+                if (b <= a)
+                    break;
+                i++;
+            }
+            while (nextMoves[i] != NULL)
+            {
+                i++;
+            }
+            for (int k = 0; k < i; ++k)
+            {
+                for (int l = 0; l < 8; ++l)
+                {
+                    delete[] nextMoves[k][l];
+                }
+                delete[] nextMoves[k];
+            }
+            delete[] nextMoves;
+        }
+        else
+        {
+            v = POSINF;
+            pt = changePiece(pt);
+            while (nextMoves[i] != NULL)
+            {
+                tempv = alphabeta(nextMoves[i], d - 1, a, b, pieceColor, pt, NULL, start_t, end_t);
+                if (v >= tempv)
+                {
+                    v = tempv;
+                }
+                b = (b < v) ? b : v;
+                if (b <= a)
+                    break;
+                i++;
+            }
+            while (nextMoves[i] != NULL)
+            {
+                i++;
+            }
+            for (int k = 0; k < i; ++k)
+            {
+                for (int l = 0; l < 8; ++l)
+                {
+                    delete[] nextMoves[k][l];
+                }
+                delete[] nextMoves[k];
+            }
+            delete[] nextMoves;
+        }
+        return v;
+    }
 
-                        //if tile is a valid board space
-                        if (rowCounter + xchange >= 0 &&
-                            rowCounter + xchange <= 7 &&
-                            columnCounter + ychange >= 0 &&
-                            columnCounter + ychange <= 7)
+    // pass in the current board and current player's turn
+    // output the list of moves for the AI
+    spaceState ***Board::AIMoves(spaceState * *inputBoard, spaceState pieceColor)
+    {
+        //pointer to a pointer to a pointer of an 64x8x8 spaceStates
+        spaceState ***moves = new spaceState **[64];
+        for (int k = 0; k < 64; ++k)
+        {
+            moves[k] = NULL;
+        }
+
+        moves[0] = NULL;
+
+        int rowCounter = 0;
+        int columnCounter = 0;
+        int xchange = 0;
+        int ychange = 0;
+        int rowIterator = 0;
+        int moveCounter = 0;
+
+        for (rowCounter = 0; rowCounter < 8; rowCounter++)
+        {
+            for (columnCounter = 0; columnCounter < 8; columnCounter++)
+            {
+                if (inputBoard[rowCounter][columnCounter] == EMPTY)
+                {
+                    for (xchange = -1; xchange < 2; xchange++)
+                    {
+                        for (ychange = -1; ychange < 2; ychange++)
                         {
-                            //if the next tile is empty or the same as the players piece
-                            if (pieceColor == inputBoard[rowCounter + xchange][columnCounter + ychange] ||
-                                inputBoard[rowCounter + xchange][columnCounter + ychange] == EMPTY)
-                            {
-                                ; //do nothing since cant move do to this direction
-                            }
-                            //the next tile is the opponents piece
-                            else
-                            {
-                                //search for a piece of the same type in a direction
-                                for (rowIterator = 2; rowIterator < 8; rowIterator++)
-                                {
-                                    //if tile is a valid board space
-                                    if (rowCounter + rowIterator * xchange >= 0 && rowCounter + rowIterator * xchange <= 7 && columnCounter + rowIterator * ychange >= 0 && columnCounter + rowIterator * ychange <= 7)
-                                    {
-                                        //if a same piece is found in direction
-                                        if (inputBoard[rowCounter + rowIterator * xchange][columnCounter + rowIterator * ychange] == pieceColor)
-                                        {
-                                            moves[moveCounter] = pseudoplay(inputBoard, rowCounter, columnCounter, pieceColor);
-                                            moveCounter++;
-                                            moves[moveCounter] = NULL;
-                                            goto NextAIBoardSpace;
-                                        }
 
-                                        //if empty spot found in direction
-                                        else if (inputBoard[rowCounter + rowIterator * xchange][columnCounter + rowIterator * ychange] == EMPTY)
+                            //if tile is a valid board space
+                            if (rowCounter + xchange >= 0 &&
+                                rowCounter + xchange <= 7 &&
+                                columnCounter + ychange >= 0 &&
+                                columnCounter + ychange <= 7)
+                            {
+                                //if the next tile is empty or the same as the players piece
+                                if (pieceColor == inputBoard[rowCounter + xchange][columnCounter + ychange] ||
+                                    inputBoard[rowCounter + xchange][columnCounter + ychange] == EMPTY)
+                                {
+                                    ; //do nothing since cant move do to this direction
+                                }
+                                //the next tile is the opponents piece
+                                else
+                                {
+                                    //search for a piece of the same type in a direction
+                                    for (rowIterator = 2; rowIterator < 8; rowIterator++)
+                                    {
+                                        //if tile is a valid board space
+                                        if (rowCounter + rowIterator * xchange >= 0 && rowCounter + rowIterator * xchange <= 7 && columnCounter + rowIterator * ychange >= 0 && columnCounter + rowIterator * ychange <= 7)
+                                        {
+                                            //if a same piece is found in direction
+                                            if (inputBoard[rowCounter + rowIterator * xchange][columnCounter + rowIterator * ychange] == pieceColor)
+                                            {
+                                                moves[moveCounter] = pseudoplay(inputBoard, rowCounter, columnCounter, pieceColor);
+                                                moveCounter++;
+                                                moves[moveCounter] = NULL;
+                                                goto NextAIBoardSpace;
+                                            }
+
+                                            //if empty spot found in direction
+                                            else if (inputBoard[rowCounter + rowIterator * xchange][columnCounter + rowIterator * ychange] == EMPTY)
+                                            {
+                                                break;
+                                            }
+                                        }
+                                        else
                                         {
                                             break;
                                         }
                                     }
-                                    else
-                                    {
-                                        break;
-                                    }
                                 }
                             }
                         }
                     }
                 }
+            NextAIBoardSpace:;
             }
-        NextAIBoardSpace:;
         }
-    }
-    return moves;
-}
-
-// input the current board, current player's turn, and selected move on the board
-// output the resulting board IF we are playing in the selected spot
-spaceState **Board::pseudoplay(spaceState **inputBoard, int rowSelect, int columnSelect, spaceState pieceColor)
-{
-    int xchange = 0;
-    int ychange = 0;
-    int rowCounter = 0;
-    int columnCounter = 0;
-
-    spaceState **pseudoboard = new spaceState *[8];
-    for (int k = 0; k < 8; k++)
-    {
-        pseudoboard[k] = new spaceState[8]();
+        return moves;
     }
 
-    for (int k = 0; k < 8; k++)
+    // input the current board, current player's turn, and selected move on the board
+    // output the resulting board IF we are playing in the selected spot
+    spaceState **Board::pseudoplay(spaceState * *inputBoard, int rowSelect, int columnSelect, spaceState pieceColor)
     {
-        for (int l = 0; l < 8; l++)
+        int xchange = 0;
+        int ychange = 0;
+        int rowCounter = 0;
+        int columnCounter = 0;
+
+        spaceState **pseudoboard = new spaceState *[8];
+        for (int k = 0; k < 8; k++)
         {
-            pseudoboard[k][l] = inputBoard[k][l];
+            pseudoboard[k] = new spaceState[8]();
         }
-    }
 
-    for (xchange = -1; xchange < 2; xchange++)
-    {
-        for (ychange = -1; ychange < 2; ychange++)
+        for (int k = 0; k < 8; k++)
         {
-            //if tile is a valid board space
-            if (rowSelect + xchange >= 0 &&
-                rowSelect + xchange <= 7 &&
-                columnSelect + ychange >= 0 &&
-                columnSelect + ychange <= 7)
+            for (int l = 0; l < 8; l++)
             {
-                //if the next tile is empty or the same as the players piece
-                if (pieceColor == inputBoard[rowSelect + xchange][columnSelect + ychange] ||
-                    inputBoard[rowSelect + xchange][columnSelect + ychange] == EMPTY)
+                pseudoboard[k][l] = inputBoard[k][l];
+            }
+        }
+
+        for (xchange = -1; xchange < 2; xchange++)
+        {
+            for (ychange = -1; ychange < 2; ychange++)
+            {
+                //if tile is a valid board space
+                if (rowSelect + xchange >= 0 &&
+                    rowSelect + xchange <= 7 &&
+                    columnSelect + ychange >= 0 &&
+                    columnSelect + ychange <= 7)
                 {
-                    ; //do nothing since cant move do to this direction
-                }
-                //the next tile is the opponents piece
-                else
-                {
-                    //search for a piece of the same type in a direction
-                    for (rowCounter = 2; rowCounter < 8; rowCounter++)
+                    //if the next tile is empty or the same as the players piece
+                    if (pieceColor == inputBoard[rowSelect + xchange][columnSelect + ychange] ||
+                        inputBoard[rowSelect + xchange][columnSelect + ychange] == EMPTY)
                     {
-                        //if tile is a valid board space
-                        if (rowSelect + rowCounter * xchange >= 0 &&
-                            rowSelect + rowCounter * xchange <= 7 &&
-                            columnSelect + rowCounter * ychange >= 0 &&
-                            columnSelect + rowCounter * ychange <= 7)
+                        ; //do nothing since cant move do to this direction
+                    }
+                    //the next tile is the opponents piece
+                    else
+                    {
+                        //search for a piece of the same type in a direction
+                        for (rowCounter = 2; rowCounter < 8; rowCounter++)
                         {
-                            //if a same piece is found in direction
-                            if (inputBoard[rowSelect + rowCounter * xchange][columnSelect + rowCounter * ychange] == pieceColor)
+                            //if tile is a valid board space
+                            if (rowSelect + rowCounter * xchange >= 0 &&
+                                rowSelect + rowCounter * xchange <= 7 &&
+                                columnSelect + rowCounter * ychange >= 0 &&
+                                columnSelect + rowCounter * ychange <= 7)
                             {
-                                for (columnCounter = 0; columnCounter < rowCounter; columnCounter++)
+                                //if a same piece is found in direction
+                                if (inputBoard[rowSelect + rowCounter * xchange][columnSelect + rowCounter * ychange] == pieceColor)
                                 {
-                                    pseudoboard[rowSelect + columnCounter * xchange][columnSelect + columnCounter * ychange] = pieceColor;
+                                    for (columnCounter = 0; columnCounter < rowCounter; columnCounter++)
+                                    {
+                                        pseudoboard[rowSelect + columnCounter * xchange][columnSelect + columnCounter * ychange] = pieceColor;
+                                    }
+                                    break;
                                 }
-                                break;
+                                //if empty spot found in direction
+                                else if (inputBoard[rowSelect + rowCounter * xchange][columnSelect + rowCounter * ychange] == EMPTY)
+                                {
+                                    break;
+                                }
                             }
-                            //if empty spot found in direction
-                            else if (inputBoard[rowSelect + rowCounter * xchange][columnSelect + rowCounter * ychange] == EMPTY)
+                            else
                             {
                                 break;
                             }
-                        }
-                        else
-                        {
-                            break;
                         }
                     }
                 }
             }
         }
+        return pseudoboard;
     }
-    return pseudoboard;
-}
 
-// input takes in the current player's turn and the current game board
-// output a zero sum value representative of the who is winning at that moment
-int Board::heuristicFunction0(spaceState **inputBoard, spaceState pieceColor)
-{
+    /// input takes in the current player's turn and the current game board
+    // output a zero sum value representative of the who is winning at that moment
+    int Board::heuristicFunction0(spaceState * *inputBoard, spaceState pieceColor)
+    {
+        //ensure the heurstic is zero sum!
+        int val = 0;
+        // This is a brute force function for weighting the board.
+
+#define A 160
+#define B -20
+#define C 6
+#define D 20
+#define E -20
+#define F 30
+#define G 4
+#define H 12
+#define L 4
+#define M 8
+
+        // This is a weighting for the spaces of the board.  This is used to assign values to specific plays.
+        int weight[8][8] = {A, E, F, H, H, F, E, A,
+                            E, B, G, L, L, G, B, E,
+                            F, G, C, M, M, C, G, F,
+                            H, L, M, D, D, M, L, H,
+                            H, L, M, D, D, M, L, H,
+                            F, G, C, M, M, C, G, F,
+                            E, B, G, L, L, G, B, E,
+                            A, E, F, H, H, F, E, A};
+
+        if (inputBoard[0][0] != EMPTY)
+        {
+            weight[1][0] = F;
+            weight[0][1] = F;
+            weight[1][1] = F;
+        }
+        if (inputBoard[0][7] != EMPTY)
+        {
+            weight[1][7] = F;
+            weight[0][6] = F;
+            weight[1][6] = F;
+        }
+        if (inputBoard[7][0] != EMPTY)
+        {
+            weight[7][1] = F;
+            weight[6][1] = F;
+            weight[6][0] = F;
+        }
+        if (inputBoard[7][7] != EMPTY)
+        {
+            weight[7][6] = F;
+            weight[6][7] = F;
+            weight[6][6] = F;
+        }
+
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                if (inputBoard[i][j] == pieceColor)
+                {
+                    val = val + weight[i][j];
+                }
+                else if (inputBoard[i][j] != EMPTY)
+                {
+                    val = val - weight[i][j];
+                }
+            }
+        }
+        val = val * 10 + (rand() % 3);
+        return val;
+    }
+
+    int Board::heuristicFunction1(spaceState * *inputBoard, spaceState pieceColor)
+    {
+        //ensure the heurstic is zero sum!
+        // This is a brute force function for weighting the board.
+        int val = 0;
+        int a = 60;
+        int b = -20;
+        int c = 6;
+        int d = 10;
+        int e = -20;
+        int f = 8;
+        int g = 4;
+        int h = 8;
+        int l = 8;
+        int m = 20;
+        int weight[8][8] = {a, e, f, h, h, f, e, a,
+                            e, b, g, l, l, g, b, e,
+                            f, g, c, m, m, c, g, f,
+                            h, l, m, d, d, m, l, h,
+                            h, l, m, d, d, m, l, h,
+                            f, g, c, m, m, c, g, f,
+                            e, b, g, l, l, g, b, e,
+                            a, e, f, h, h, f, e, a};
+
+        val = val * 10 + (rand() % 10);
+        return val;
+    }
+
+    int Board::heuristicFunction2(spaceState * *inputBoard, spaceState pieceColor)
+    {
+        int val = 0;
+#define A 20
+#define B -20
+#define C 6
+#define D 10
+#define E -20
+#define F 8
+#define G 4
+#define H 8
+#define L 4
+#define M 6
+        int weight[8][8] = {A, E, F, H, H, F, E, A,
+                            E, B, G, L, L, G, B, E,
+                            F, G, C, M, M, C, G, F,
+                            H, L, M, D, D, M, L, H,
+                            H, L, M, D, D, M, L, H,
+                            F, G, C, M, M, C, G, F,
+                            E, B, G, L, L, G, B, E,
+                            A, E, F, H, H, F, E, A};
+
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                if (inputBoard[i][j] == pieceColor)
+                {
+                    val = val + weight[i][j];
+                }
+                else if (inputBoard[i][j] != EMPTY)
+                {
+                    val = val - weight[i][j];
+                }
+            }
+        }
+        val = val * 10 + (rand() % 10);
+        return val;
+    }
+
+    /*    int val = 0;
     //ensure the heurstic is zero sum!
-    int val = 0;
-// This is a brute force function for weighting the board.
-#define A 20
-#define B -20
-#define C 6
-#define D 10
-#define E -20
-#define F 8
-#define G 4
-#define H 8
-#define L 4
-#define M 6
-    // This is a weighting for the spaces of the board.  This is used to assign values to specific plays.
-    int weight[8][8] = {A, E, F, H, H, F, E, A,
-                        E, B, G, L, L, G, B, E,
-                        F, G, C, M, M, C, G, F,
-                        H, L, M, D, D, M, L, H,
-                        H, L, M, D, D, M, L, H,
-                        F, G, C, M, M, C, G, F,
-                        E, B, G, L, L, G, B, E,
-                        A, E, F, H, H, F, E, A};
-    for (int i = 0; i < 8; i++)
-    {
-        for (int j = 0; j < 8; j++)
-        {
-            if (inputBoard[i][j] == pieceColor)
-            {
-                val = val + weight[i][j];
-            }
-            else if (inputBoard[i][j] != EMPTY)
-            {
-                val = val - weight[i][j];
-            }
-        }
-    }
-    val = val * 10 + (rand() % 10);
-    return val;
-}
-
-int Board::heuristicFunction2(spaceState **inputBoard, spaceState pieceColor)
-{
-    int val = 0;
-#define A 20
-#define B -20
-#define C 6
-#define D 10
-#define E -20
-#define F 8
-#define G 4
-#define H 8
-#define L 4
-#define M 6
-    int weight[8][8] = {A, E, F, H, H, F, E, A,
-                        E, B, G, L, L, G, B, E,
-                        F, G, C, M, M, C, G, F,
-                        H, L, M, D, D, M, L, H,
-                        H, L, M, D, D, M, L, H,
-                        F, G, C, M, M, C, G, F,
-                        E, B, G, L, L, G, B, E,
-                        A, E, F, H, H, F, E, A};
-    for (int i = 0; i < 8; i++)
-    {
-        for (int j = 0; j < 8; j++)
-        {
-            if (inputBoard[i][j] == pieceColor)
-            {
-                val = val + weight[i][j];
-            }
-            else if (inputBoard[i][j] != EMPTY)
-            {
-                val = val - weight[i][j];
-            }
-        }
-    }
+=======
     return val;
 
     val = val * 10 + (rand() % 10);
@@ -1079,6 +1150,7 @@ int Board::heuristicFunction1(spaceState **inputBoard, spaceState pieceColor)
     int val = 0;
     //ensure the heurstic is zero sum!
     // This is the default algorithm to play against.
+>>>>>>> e95f5d0749880819bf992ef60715c22566332d73
     int corner = 0;
     for (int i = 0; i < 8; i++)
     {
@@ -1120,7 +1192,7 @@ int Board::heuristicFunction1(spaceState **inputBoard, spaceState pieceColor)
     }
     if (inputBoard[7][0] == pieceColor)
     {
-        corner++;
+        -corner++;
     }
     else if (inputBoard[7][7] != EMPTY)
     {
@@ -1128,4 +1200,55 @@ int Board::heuristicFunction1(spaceState **inputBoard, spaceState pieceColor)
     }
 
     val = val * 10 + (rand() % 10) + corner * 300;
-}
+<<<<<<< HEAD
+    return val;
+}*/
+
+    int Board::heuristicFunction2(spaceState * *inputBoard, spaceState pieceColor)
+    {
+        int val = 0;
+        int a = 60;
+        int b = -40;
+        int c = 6;
+        int d = 10;
+        int e = -40;
+        int f = 10;
+        int g = 4;
+        int h = 8;
+        int l = 4;
+        int m = 8;
+        int weight[8][8] = {a, e, f, h, h, f, e, a,
+                            e, b, g, l, l, g, b, e,
+                            f, g, c, m, m, c, g, f,
+                            h, l, m, d, d, m, l, h,
+                            h, l, m, d, d, m, l, h,
+                            f, g, c, m, m, c, g, f,
+                            e, b, g, l, l, g, b, e,
+                            a, e, f, h, h, f, e, a};
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                if (inputBoard[i][j] == pieceColor)
+                {
+                    val = val + weight[i][j];
+                }
+                else if (inputBoard[i][j] != EMPTY)
+                {
+                    val = val - weight[i][j];
+                }
+            }
+        }
+        /*if (pieceColor == WHITE)
+    {
+		int nBlackMoves = moveCount(legalMoves(inputBoard, BLACK));
+        val = val + nBlackMoves * 5;
+    }
+    else
+    {
+        int nWhiteMoves = moveCount(legalMoves(inputBoard, WHITE));
+        val = val + nWhiteMoves * 5;
+    }*/
+        val = val * 10 + (rand() % 5);
+        return val;
+    }
